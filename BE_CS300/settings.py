@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app',
     'course',
-    'section',
     'rest_framework',
     'drf_spectacular',
     'drf_spectacular_sidecar',
