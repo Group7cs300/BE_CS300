@@ -1,13 +1,12 @@
-from .category import Tag, Category
+from .category import Category
 from .course import Course
-
+from .section import Section
 __all__ = [
-<<<<<<< Updated upstream
-    "Course"
-=======
+
     "Course",
     "Section",
     "Category",
-    "Tag"
->>>>>>> Stashed changes
+
 ]
+
+

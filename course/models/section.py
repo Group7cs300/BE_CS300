@@ -10,8 +10,8 @@ from course.models import Course
 class Section(BaseModel):
     name = models.CharField(max_length=250)
 
-    courseID = models.ForeignKey(Course, related_name='sections', on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, related_name='sections', on_delete=models.CASCADE)
 
     sectionNum = models.IntegerField(default=1, validators=[MaxValueValidator(50), MinValueValidator(1)])
-    documentLink = models.CharField(max_length=500)
-    videoLink = models.FileField(upload_to="sections/video")
+    document = models.CharField(max_length=500)
+    video = models.FileField(upload_to="sections/video")
