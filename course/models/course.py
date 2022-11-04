@@ -12,3 +12,6 @@ class Course(BaseModel):
     tutor = models.ForeignKey(Account, related_name='courses', on_delete=models.CASCADE)
     price = models.IntegerField(default=1, validators=[MaxValueValidator(500), MinValueValidator(1)])
     cover_image = models.ImageField(upload_to='courses/covers', null=True)
+
+    def __str__(self):
+        return self.name
