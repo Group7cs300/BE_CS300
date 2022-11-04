@@ -5,11 +5,13 @@ from course.serializers.course import CourseSerializer
 from django_filters import rest_framework as filters
 
 
-
 class CourseFilter(filters.FilterSet):
     class Meta:
         model = Course
-        fields = ['name']
+        fields = {
+            'name': ['icontains']
+        }
+
 
 class CourseViewSet(ModelViewSet):
     serializer_class = CourseSerializer
