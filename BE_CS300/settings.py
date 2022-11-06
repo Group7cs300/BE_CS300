@@ -53,8 +53,8 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Lychee Tea APIs',
-    'DESCRIPTION': '3D Building',
+    'TITLE': 'CS300 APIs',
+    'DESCRIPTION': 'Learn together APIs',
     'VERSION': '1.0.0',
     'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead
     'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
