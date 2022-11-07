@@ -15,3 +15,5 @@ class Course(BaseModel):
     cover_image = models.ImageField(upload_to='courses/covers', null=True)
     categories = models.ManyToManyField(Category, related_name='courses')
 
+    def __str__(self):
+        return self.name
