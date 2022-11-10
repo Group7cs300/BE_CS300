@@ -10,6 +10,5 @@ __all__ = [
     "Rating",
     "Section",
     "Category",
-    "OwnedCourse"
 ]
 
