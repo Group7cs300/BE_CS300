@@ -7,3 +7,8 @@ class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = '__all__'
+
+class AutoCompleteCourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = ['name']
