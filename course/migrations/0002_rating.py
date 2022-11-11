@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('course', '0003_category_rename_courseid_section_course_and_more'),
+        ('course', '0001_initial'),
     ]
 
     operations = [

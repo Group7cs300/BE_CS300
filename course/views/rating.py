@@ -9,8 +9,7 @@ class Rating(APIView):
         return Response({"Message": "List of rating", "Rating": all_rating})
 
     def post(self, request):
-        Rating.objects.create(course=request.data["course"],
+        new_rating = Rating.objects.create(course=request.data["course"],
                               star=request.data["star"],
                               user=request.data["user"])
-        new_rating = Rating.objects.all().filter(id=request.data["id"]).values()
         return Response({"Message": "New Rating added!", "Rating": new_rating})
