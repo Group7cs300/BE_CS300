@@ -1,6 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 
 from course.models.course import Course
+from course.serializers.course import CourseDetailSerializer
 from course.serializers.course import CourseSerializer
 from django_filters import rest_framework as filters
 
@@ -18,3 +19,10 @@ class CourseViewSet(ModelViewSet):
     queryset = Course.objects.all()
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = CourseFilter
+
+    def get_serializer_class(self):
+        match self.action:
+            case 'retrieve':
+                return CourseSerializer
+            case _:
+                return CourseDetailSerializer

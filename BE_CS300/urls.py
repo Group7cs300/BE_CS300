@@ -1,9 +1,12 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from drf_spectacular.views import SpectacularAPIView
 from drf_spectacular.views import SpectacularSwaggerView
 from rest_framework.routers import SimpleRouter
 
+from app.utils.environment import is_local
 from app.views import HealthCheckView
 from course.views.course import CourseViewSet
 
@@ -13,6 +16,9 @@ urlpatterns = [
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
     path('schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui')
 ]
+
+if is_local():
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 router = SimpleRouter(trailing_slash=False)
 router.register(r'^course', CourseViewSet)
