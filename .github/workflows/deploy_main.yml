@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - I2G-36-deploy-BE
 
 jobs:
   lint:
