@@ -23,13 +23,7 @@ class CourseViewSet(ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = CourseFilter
 
-    @action(detail=True, methods=['get'])
-    def get_category_course(self, request, pk=None):
-        objs = Course.objects.filter(categories__name__icontains=pk).values('name')
-        serializer = CourseNameSerializer(objs, many=True)
-        return Response(serializer.data)
-
-    @action(detail=True, methods=['get'])
+    @action(detail=False, methods=['get'])
     def get_popular_course(self, request, pk=None):
         prefetch = Prefetch('course_id', queryset=Course.objects.all())  # point primary key
         objs = OwnedCourse.objects.prefetch_related(prefetch).filter(course_id__categories__name__icontains=pk)
