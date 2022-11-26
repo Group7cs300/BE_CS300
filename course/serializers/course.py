@@ -4,6 +4,8 @@ from course.models.course import Course
 
 
 class CourseSerializer(serializers.ModelSerializer):
+    rate = serializers.FloatField()
+
     class Meta:
         model = Course
         fields = '__all__'
