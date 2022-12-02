@@ -1,4 +1,6 @@
 import django_filters
+from django.db.models import Avg, Count
+from django.db.models.functions import Coalesce
 from rest_framework.filters import OrderingFilter
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import ModelViewSet
@@ -27,15 +29,15 @@ class CoursePagination(PageNumberPagination):
 
 class CourseViewSet(ModelViewSet):
     serializer_class = CourseSerializer
-    queryset = Course.objects.all()
+    queryset = Course.objects.all().annotate(rate=Coalesce(Avg('rating__star'), 0.0)).annotate(popular=Count('ownedcourse__user_id'))
     filter_backends = (filters.DjangoFilterBackend, OrderingFilter)
     filterset_class = CourseFilter
-    ordering_fields = ['price']
+    ordering_fields = ['price','rate','popular']
     pagination_class = CoursePagination
 
     def get_serializer_class(self):
         match self.action:
             case 'retrieve':
-                return CourseSerializer
-            case _:
                 return CourseDetailSerializer
+            case _:
+                return CourseSerializer
