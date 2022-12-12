@@ -11,3 +11,19 @@ services:
     - POSTGRES_DB=cs300
     ports:
     - "5432:5432"
+
+  localstack:
+    image: localstack/localstack
+    ports:
+      - 4566:4566
+    environment:
+      DEBUG: false
+      SERVICES: s3
+      DOCKER_HOST: unix:///var/run/docker.sock
+      DISABLE_CORS_HEADERS: 1
+      DISABLE_CORS_CHECKS: 1
+    volumes:
+      - ./localstack/cors.json:/opt/code/localstack/cors.json
+      - ./localstack/volumn:/var/lib/localstack
+      - ./localstack/localstack.sh:/etc/localstack/init/ready.d/localstack.sh
+      - /var/run/docker.sock:/var/run/docker.sock
