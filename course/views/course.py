@@ -22,6 +22,7 @@ class CourseFilter(filters.FilterSet):
             'updated_at__gt'
         ]
 
+
 class CoursePagination(PageNumberPagination):
     page_size = 9
     max_page_size = 100
@@ -29,10 +30,11 @@ class CoursePagination(PageNumberPagination):
 
 class CourseViewSet(ModelViewSet):
     serializer_class = CourseSerializer
-    queryset = Course.objects.all().annotate(rate=Coalesce(Avg('rating__star'), 0.0)).annotate(popular=Count('ownedcourse__user_id'))
+    queryset = Course.objects.all().annotate(rate=Coalesce(Avg('rating__star'), 0.0)).annotate(
+        popular=Count('ownedcourse__user_id'))
     filter_backends = (filters.DjangoFilterBackend, OrderingFilter)
     filterset_class = CourseFilter
-    ordering_fields = ['price','rate','popular']
+    ordering_fields = ['price', 'rate', 'popular']
     pagination_class = CoursePagination
 
     def get_serializer_class(self):
