@@ -6,7 +6,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import ModelViewSet
 
 from course.models.course import Course
-from course.serializers.course import CourseDetailSerializer
+from course.serializers.course import CourseDetailSerializer, UploadCourseSerializer
 from course.serializers.course import CourseSerializer
 from django_filters import rest_framework as filters
 
@@ -37,6 +37,8 @@ class CourseViewSet(ModelViewSet):
 
     def get_serializer_class(self):
         match self.action:
+            case 'create':
+                return UploadCourseSerializer
             case 'retrieve':
                 return CourseDetailSerializer
             case _:

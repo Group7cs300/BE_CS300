@@ -16,5 +16,5 @@ class Section(BaseModel):
     name = models.CharField(max_length=250)
     course = models.ForeignKey(Course, related_name='sections', on_delete=models.CASCADE)
     sectionNum = models.IntegerField(default=1, validators=[MaxValueValidator(50), MinValueValidator(1)])
-    document = models.CharField(max_length=500)
+    document = models.FileField(upload_to=get_section_path, max_length=500)
     video = models.FileField(upload_to=get_section_path, max_length=500)

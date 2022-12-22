@@ -21,6 +21,7 @@ class Course(BaseModel):
     price = models.IntegerField(default=1, validators=[MaxValueValidator(500), MinValueValidator(1)])
     cover_image = models.ImageField(upload_to=get_course_path, null=True, max_length=500)
     categories = models.ManyToManyField(Category, related_name='courses')
+    description = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.name
