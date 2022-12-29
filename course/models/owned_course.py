@@ -5,5 +5,5 @@ from app.models import BaseModel
 
 
 class OwnedCourse(BaseModel):
-    user_id = models.ForeignKey(Account, on_delete=models.CASCADE)
-    course_id = models.ForeignKey(Course, on_delete=models.CASCADE)
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)

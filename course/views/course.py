@@ -14,13 +14,15 @@ from django_filters import rest_framework as filters
 class CourseFilter(filters.FilterSet):
     updated_at__gt = django_filters.DateFilter(field_name='updated_at', lookup_expr='date__gte')
     name = django_filters.CharFilter(field_name='name', lookup_expr='icontains')
+    tutor = django_filters.CharFilter(field_name='tutor')
 
     class Meta:
         model = Course
         fields = [
             'name',
-            'updated_at__gt'
+            'updated_at__gt',
         ]
+
 
 class CoursePagination(PageNumberPagination):
     page_size = 9
@@ -32,7 +34,7 @@ class CourseViewSet(ModelViewSet):
     queryset = Course.objects.all().annotate(rate=Coalesce(Avg('rating__star'), 0.0)).annotate(popular=Count('ownedcourse__user_id'))
     filter_backends = (filters.DjangoFilterBackend, OrderingFilter)
     filterset_class = CourseFilter
-    ordering_fields = ['price','rate','popular']
+    ordering_fields = ['price', 'rate', 'popular']
     pagination_class = CoursePagination
 
     def get_serializer_class(self):

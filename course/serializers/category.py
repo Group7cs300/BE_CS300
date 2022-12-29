@@ -6,4 +6,4 @@ from course.models.category import Category
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = '__all__'
+        fields = ['name', 'uuid','creater','created_by_system']
