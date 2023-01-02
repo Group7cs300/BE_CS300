@@ -9,7 +9,10 @@ from rest_framework.routers import SimpleRouter
 
 from app.utils.environment import is_local
 from app.views.health_check import HealthCheckView
+from course.views.category import CategoryViewSet
 from course.views.course import CourseViewSet
+from course.views.owned_course import OwnedCourseViewSet
+from course.views.section import SectionViewSet
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +27,8 @@ if is_local():
 
 router = SimpleRouter(trailing_slash=False)
 router.register(r'^course', CourseViewSet)
+router.register(r'^owned_courses', OwnedCourseViewSet)
+router.register(r'^categories', CategoryViewSet)
+router.register(r'^sections', SectionViewSet)
 
 urlpatterns += router.urls

@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from app.models import Account
-from app.serializers.account import AccountSerializer
+from app.serializers.account import AccountSerializer, NameUserSerializer
 from app.serializers.account import SignInSerializer
 from app.serializers.account import SignUpSerializer
 
