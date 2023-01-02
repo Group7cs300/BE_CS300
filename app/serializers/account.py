@@ -4,12 +4,25 @@ from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import AuthenticationFailed
 
 from app.models import Account
+from course.models import Course
 
 
 class AccountSerializer(serializers.ModelSerializer):
+    total_uploaded_course = serializers.SerializerMethodField(read_only=True)
+
+    @staticmethod
+    def get_total_uploaded_course(obj):
+        return Course.objects.filter(tutor=obj).count()
+
     class Meta:
         model = Account
         exclude = ['password']
+
+
+class NameUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = ['uuid', 'first_name', 'last_name']
 
 
 class SignUpSerializer(serializers.Serializer):
@@ -47,5 +60,3 @@ class SignInSerializer(serializers.Serializer):
 
         token, created = Token.objects.get_or_create(user=user)
         return user, token.key
-
-
