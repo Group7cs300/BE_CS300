@@ -20,6 +20,7 @@ class CourseFilter(filters.FilterSet):
     name = django_filters.CharFilter(field_name='name', lookup_expr='icontains')
     tutor = django_filters.CharFilter(field_name='tutor')
     categories = django_filters.CharFilter(field_name='categories')
+
     class Meta:
         model = Course
         fields = [
@@ -31,6 +32,7 @@ class CourseFilter(filters.FilterSet):
 class CoursePagination(PageNumberPagination):
     page_size = 9
     max_page_size = 100
+
 
 class CourseViewSet(ModelViewSet):
     serializer_class = CourseSerializer
@@ -61,7 +63,6 @@ class CourseViewSet(ModelViewSet):
     def bought_courses(self, request: Request):
         return self.list(request)
 
-
     @action(methods=['GET'], detail=False)
-    def category_courses(self,request:Request,pk=None):
+    def category_courses(self, request: Request, pk=None):
         return self.list(self.queryset.filter(Q(categories__uuid=pk)))

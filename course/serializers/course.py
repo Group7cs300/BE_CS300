@@ -10,6 +10,7 @@ class CourseSerializer(serializers.ModelSerializer):
     rate = serializers.FloatField()
     popular = serializers.IntegerField()
     tutor = AccountSerializer()
+
     class Meta:
         model = Course
         depth = 1
@@ -39,13 +40,13 @@ class CourseDetailSerializer(serializers.ModelSerializer):
     rate = serializers.FloatField()
     popular = serializers.IntegerField()
     tutor = NameUserSerializer()
-
     is_bought = serializers.SerializerMethodField()
 
     def get_is_bought(self, obj):
         if self.context.get('request').user.is_authenticated:
             return OwnedCourse.objects.filter(course=obj, user=self.context.get('request').user).exists()
         return False
+
     class Meta:
         model = Course
         depth = 2
