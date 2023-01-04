@@ -1,5 +1,5 @@
 import django_filters
-from django.db.models import Avg, Count
+from django.db.models import Avg, Count, Q
 from django.db.models.functions import Coalesce
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter
@@ -19,6 +19,7 @@ class CourseFilter(filters.FilterSet):
     updated_at__gt = django_filters.DateFilter(field_name='updated_at', lookup_expr='date__gte')
     name = django_filters.CharFilter(field_name='name', lookup_expr='icontains')
     tutor = django_filters.CharFilter(field_name='tutor')
+    categories = django_filters.CharFilter(field_name='categories')
     class Meta:
         model = Course
         fields = [
@@ -59,3 +60,8 @@ class CourseViewSet(ModelViewSet):
     @action(methods=['GET'], detail=False, permission_classes=[IsAuthenticated])
     def bought_courses(self, request: Request):
         return self.list(request)
+
+
+    @action(methods=['GET'], detail=False)
+    def category_courses(self,request:Request,pk=None):
+        return self.list(self.queryset.filter(Q(categories__uuid=pk)))
