@@ -1,19 +1,29 @@
-from rest_framework.decorators import action
-from rest_framework.response import Response
+import django_filters
+from django.db.models import Q
 from rest_framework.viewsets import ModelViewSet
 
-from course.models import Course
-from course.serializers.category import CategorySerializer
 from course.models.category import Category
-from course.serializers.course import CourseNameSerializer
+from course.serializers.category import CategorySerializer
+from django_filters import rest_framework as filters
+
+
+class CategoryFilter(filters.FilterSet):
+    name = django_filters.CharFilter(field_name='name')
+    creater = django_filters.CharFilter(field_name='creater')
+    class Meta:
+        model = Category
+        fields = [
+            'name',
+            'creater'
+        ]
 
 
 class CategoryViewSet(ModelViewSet):
     serializer_class = CategorySerializer
-    queryset = Category.objects.all()
+    queryset = Category.objects.none()
+    filterset_class = CategoryFilter
 
-    @action(detail=False, methods=['get'])
-    def get_category_course(self, request, pk=None):
-        objs = Course.objects.filter(categories__name__icontains=pk).values('name')
-        serializer = CourseNameSerializer(objs, many=True)
-        return Response(serializer.data)
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Category.objects.filter(Q(creater=self.request.user) | Q(created_by_system=True))
+        return Category.objects.filter(created_by_system=True)
