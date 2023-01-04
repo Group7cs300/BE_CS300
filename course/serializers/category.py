@@ -1,6 +1,5 @@
 from rest_framework import serializers
 
-from app.serializers.account import AccountSerializer, NameUserSerializer
 from course.models.category import Category
 
 

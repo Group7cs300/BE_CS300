@@ -3,13 +3,13 @@ from rest_framework import serializers
 from app.serializers.account import AccountSerializer, NameUserSerializer
 from course.models import Category
 from course.models.course import Course
-from course.serializers.category import CategorySerializer
 
 
 class CourseSerializer(serializers.ModelSerializer):
     rate = serializers.FloatField()
     popular = serializers.IntegerField()
     tutor = AccountSerializer()
+
     class Meta:
         model = Course
         depth = 1
@@ -39,7 +39,14 @@ class CourseDetailSerializer(serializers.ModelSerializer):
     rate = serializers.FloatField()
     popular = serializers.IntegerField()
     tutor = NameUserSerializer()
+
     class Meta:
         model = Course
         depth = 2
         fields = '__all__'
+
+
+class CourseNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = ['name']
