@@ -23,5 +23,5 @@ class Course(BaseModel):
     categories = models.ManyToManyField(Category, related_name='courses')
     description = models.TextField(blank=True, null=True)
 
-    # def __str__(self):
-    #     return self.name
+    def __str__(self):
+        return self.name
