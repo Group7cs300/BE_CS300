@@ -27,3 +27,4 @@ class CategoryViewSet(ModelViewSet):
         if self.request.user.is_authenticated:
             return Category.objects.filter(Q(creater=self.request.user) | Q(created_by_system=True))
         return Category.objects.filter(created_by_system=True)
+
