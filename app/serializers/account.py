@@ -29,6 +29,8 @@ class SignUpSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
     email = serializers.EmailField()
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
 
     def validate_username(self, username):
         if Account.objects.filter(username=username).exists():
@@ -41,6 +43,8 @@ class SignUpSerializer(serializers.Serializer):
             self.validated_data.get('email'),
             self.validated_data.get('password')
         )
+        Account.objects.update(first_name=self.validated_data.get('first_name'),
+                               last_name=self.validated_data.get('last_name'))
 
 
 class SignInSerializer(serializers.Serializer):
