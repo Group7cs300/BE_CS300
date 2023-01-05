@@ -3,7 +3,6 @@ from rest_framework import serializers
 from app.serializers.account import AccountSerializer, NameUserSerializer
 from course.models import Category, OwnedCourse
 from course.models.course import Course
-from course.serializers.category import CategorySerializer
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -51,3 +50,4 @@ class CourseDetailSerializer(serializers.ModelSerializer):
         model = Course
         depth = 2
         fields = '__all__'
+
