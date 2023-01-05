@@ -3,7 +3,6 @@ from rest_framework import serializers
 from app.serializers.account import AccountSerializer, NameUserSerializer
 from course.models import Category, OwnedCourse
 from course.models.course import Course
-from course.serializers.category import CategorySerializer
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -40,6 +39,7 @@ class CourseDetailSerializer(serializers.ModelSerializer):
     rate = serializers.FloatField()
     popular = serializers.IntegerField()
     tutor = NameUserSerializer()
+
     is_bought = serializers.SerializerMethodField()
 
     def get_is_bought(self, obj):
@@ -51,3 +51,9 @@ class CourseDetailSerializer(serializers.ModelSerializer):
         model = Course
         depth = 2
         fields = '__all__'
+
+
+class CourseNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = ['name']
