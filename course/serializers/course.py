@@ -51,3 +51,4 @@ class CourseDetailSerializer(serializers.ModelSerializer):
         model = Course
         depth = 2
         fields = '__all__'
+
