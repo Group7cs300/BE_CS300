@@ -1,5 +1,4 @@
 import django_filters
-from django.db.models import Avg, Count, Q
 from django.db.models import Avg
 from django.db.models import Count
 from django.db.models.functions import Coalesce
@@ -71,10 +70,6 @@ class CourseViewSet(ModelViewSet):
     @action(methods=['GET'], detail=False, permission_classes=[IsAuthenticated])
     def bought_courses(self, request: Request):
         return self.list(request)
-
-    @action(methods=['GET'], detail=False)
-    def category_courses(self, request: Request, pk=None):
-        return self.list(self.queryset.filter(Q(categories__uuid=pk)))
 
     @action(detail=False, methods=['get'])
     def popular(self, request):
