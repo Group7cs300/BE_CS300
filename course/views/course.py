@@ -17,7 +17,7 @@ from course.serializers.course import UploadCourseSerializer
 
 
 class CourseFilter(filters.FilterSet):
-    updated_at__gt = django_filters.DateFilter(field_name='updated_at', lookup_expr='date__gte')
+    created_at__gt = django_filters.DateFilter(field_name='created_at', lookup_expr='date__gte')
     name = django_filters.CharFilter(field_name='name', lookup_expr='icontains')
     tutor = django_filters.CharFilter(field_name='tutor')
     category = django_filters.CharFilter(field_name='categories')
@@ -26,7 +26,7 @@ class CourseFilter(filters.FilterSet):
         model = Course
         fields = [
             'name',
-            'updated_at__gt',
+            'created_at__gt',
             'tutor',
             'category'
         ]
@@ -64,6 +64,8 @@ class CourseViewSet(ModelViewSet):
                     .order_by('-owned_count')
             case 'bought_courses':
                 return self.queryset.filter(ownedcourse__user_id=self.request.user)
+            case 'retrieve':
+                return self.queryset.prefetch_related('sections')
             case _:
                 return self.queryset
 
@@ -74,3 +76,4 @@ class CourseViewSet(ModelViewSet):
     @action(detail=False, methods=['get'])
     def popular(self, request):
         return self.list(request)
+

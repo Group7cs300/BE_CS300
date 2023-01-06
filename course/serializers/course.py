@@ -3,6 +3,7 @@ from rest_framework import serializers
 from app.serializers.account import AccountSerializer, NameUserSerializer
 from course.models import Category, OwnedCourse
 from course.models.course import Course
+from course.serializers.section import SectionSerializer
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -39,8 +40,8 @@ class CourseDetailSerializer(serializers.ModelSerializer):
     rate = serializers.FloatField()
     popular = serializers.IntegerField()
     tutor = NameUserSerializer()
-
     is_bought = serializers.SerializerMethodField()
+    sections = SectionSerializer(many=True)
 
     def get_is_bought(self, obj):
         if self.context.get('request').user.is_authenticated:
