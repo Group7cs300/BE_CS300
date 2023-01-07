@@ -10,11 +10,13 @@ from django_filters import rest_framework as filters
 class CategoryFilter(filters.FilterSet):
     name = django_filters.CharFilter(field_name='name')
     creater = django_filters.CharFilter(field_name='creater')
+    created_by_system = django_filters.BooleanFilter(field_name='created_by_system')
     class Meta:
         model = Category
         fields = [
             'name',
-            'creater'
+            'creater',
+            'created_by_system'
         ]
 
 
