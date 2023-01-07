@@ -42,9 +42,7 @@ class SignUpSerializer(serializers.Serializer):
             self.validated_data.get('username'),
             self.validated_data.get('email'),
             self.validated_data.get('password')
-        )
-        Account.objects.filter(username=self.validated_data.get('username')).update(first_name=self.validated_data.get('first_name'),
-                               last_name=self.validated_data.get('last_name'))
+        ).update(first_name=self.validated_data.get('first_name'),last_name=self.validated_data.get('last_name'))
 
 
 class SignInSerializer(serializers.Serializer):
